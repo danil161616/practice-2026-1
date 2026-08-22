@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Робокрафт | Туториал: Telegram-бот</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Робостанция: Робокрафт</div>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="about.html">О проекте</a></li>
+                <li><a href="team.html">Участники</a></li>
+                <li><a href="journal.html">Журнал</a></li>
+                <li><a href="bot_tutorial.html">Туториал (Бот)</a></li>
+                <li><a href="resources.html">Ресурсы</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Техническое руководство: Telegram-бот</h1>
+        
+        <div class="card">
+            <h2>Введение и исследование</h2>
+            <p>В рамках вариативного задания было проведено исследование предметной области «Разработка чат-ботов». Telegram-боты представляют собой удобный интерфейс для взаимодействия человека и техники. В нашем случае бот выступает пультом мониторинга состояния робота «Робокрафт».</p>
+            <ul>
+                <li><strong>Язык программирования:</strong> Python 3.10+</li>
+                <li><strong>Библиотека:</strong> pyTelegramBotAPI (Telebot)</li>
+            </ul>
+
+            <h2>Архитектура взаимодействия</h2>
+            <p>Логика работы базируется на методе Long Polling, при котором Python-приложение опрашивает серверы Telegram на наличие новых команд от пользователя, после чего взаимодействует с состоянием робота.</p>
+
+            <h2>Пошаговая инструкция</h2>
+            <h3>Шаг 1: Регистрация бота</h3>
+            <p>Откройте Telegram, найдите <strong>@BotFather</strong> и отправьте команду <code>/newbot</code>. Следуйте инструкциям для получения HTTP API Token.</p>
+
+            <h3>Шаг 2: Установка зависимостей</h3>
+            <p>Исходный код проекта лежит в папке <code>src/</code> репозитория. Для начала работы установите библиотеку:</p>
+            <pre style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><code>pip install -r requirements.txt</code></pre>
+
+            <h3>Шаг 3: Основной код бота</h3>
+            <p>Пример реализации ответа на команду <code>/status</code>:</p>
+            <pre style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><code>
+import telebot
+bot = telebot.TeleBot('TOKEN')
+
+robot_state = {"status": "online", "battery": 85, "speed": 0}
+
+@bot.message_handler(commands=['status'])
+def check_status(message):
+    status_msg = f"Батарея: {robot_state['battery']}%\nСостояние: {robot_state['status']}"
+    bot.send_message(message.chat.id, status_msg)
+            </code></pre>
+
+            <h2>Модификация: Оценка пинга</h2>
+            <p>В рамках творческой модификации была разработана команда <code>/ping</code>, которая измеряет задержку при обращении к внутренним системам робота. Это реализовано через редактирование отправленного сообщения (пользователь видит, как статус обновляется в реальном времени):</p>
+            <pre style="background: #f4f4f4; padding: 10px; border-radius: 5px;"><code>
+@bot.message_handler(commands=['ping'])
+def ping_robot(message):
+    start_time = time.time()
+    msg = bot.send_message(message.chat.id, "Отправка запроса...")
+    time.sleep(0.5) # Имитация работы с ESP32
+    ping_time = round((time.time() - start_time) * 1000)
+    bot.edit_message_text(f"✅ Ответ получен!\nЗадержка: {ping_time} мс", 
+                          chat_id=message.chat.id, 
+                          message_id=msg.message_id)
+            </code></pre>
+            <p>Полную документацию со схемами UML (архитектура, use-case, flowchart, sequence) можно найти в файле <strong>docs/telegram_bot_tutorial.md</strong> в репозитории проекта.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Проектная практика «Робокрафт»</p>
+    </footer>
+</body>
+</html>
