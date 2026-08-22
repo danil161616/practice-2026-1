@@ -39,7 +39,7 @@ def check_status(message):
 @bot.message_handler(commands=['docs'])
 def send_docs(message):
     """Отправляет ссылку на материалы"""
-    bot.reply_to(message, "Документацию по проекту можно найти в нашем [GitHub репозитории](https://github.com/mospol/practice-2025-1).", parse_mode="Markdown")
+    bot.reply_to(message, "Документацию по проекту можно найти в нашем [GitHub репозитории](https://github.com/danil161616/practice-2026-1).", parse_mode="Markdown")
 
 @bot.message_handler(commands=['ping'])
 def ping_robot(message):

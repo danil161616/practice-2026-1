@@ -17,7 +17,7 @@
 ```mermaid
 graph TD
     User([Пользователь]) -- "Отправляет команду /status" --> TelegramApi[Telegram API]
-    TelegramApi -- "Передает JSON (Long Polling)" --> BotApp[Приложение бота (Python)]
+    TelegramApi -- "Передает JSON (Long Polling)" --> BotApp["Приложение бота (Python)"]
     BotApp -- "Читает данные о роботе" --> RobotState[(Состояние робота)]
     BotApp -- "Отправляет ответный JSON" --> TelegramApi
     TelegramApi -- "Показывает сообщение" --> User
@@ -77,12 +77,11 @@ bot.infinity_polling()
 Бот должен уметь обрабатывать различные команды пользователя.
 
 ```mermaid
-usecase
-    title Диаграмма прецедентов (Use Cases) бота Робокрафт
+flowchart LR
     User((Пользователь))
-    User --> (Узнать статус робота)
-    User --> (Получить документацию)
-    User --> (Проверить связь /ping)
+    User --> A([Узнать статус робота])
+    User --> B([Получить документацию])
+    User --> C([Проверить связь /ping])
 ```
 *Рис. 3. Диаграмма прецедентов пользователя.*
 
