@@ -2,8 +2,7 @@ import telebot
 import os
 import time
 
-# Инициализация бота (токен нужно получить у @BotFather)
-TOKEN = os.environ.get('TELEGRAM_TOKEN', 'YOUR_BOT_TOKEN_HERE')
+TOKEN = os.environ.get('TELEGRAM_TOKEN', '8614174356:AAH9Km7hHg6B9toyLrPr-ZdVaEsiWEIbRzA')
 bot = telebot.TeleBot(TOKEN)
 
 # Данные состояния робота (заглушка)
